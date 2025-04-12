@@ -1,17 +1,21 @@
-import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class Selenium {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+public class SeleniumScript {
 
     public JavascriptExecutor js;
 
     @Test
     public void firstTest() throws InterruptedException {
+
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+
         //1. Open the browser
         WebDriver driver = new ChromeDriver();
 
@@ -31,7 +35,7 @@ public class Selenium {
         //5. Test whether the Home page has Three Arrivals only
         js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,600)");
-        Assert.assertEquals(3, driver.findElements(By.cssSelector(".woocommerce")).size());
+        assertEquals(3, driver.findElements(By.cssSelector(".woocommerce")).size());
         Thread.sleep(1000);
 
         //6. Now click on one of the images in Arrivals
@@ -53,7 +57,7 @@ public class Selenium {
 
         //9. Now user can find total and subtotal values just above the Proceed to Checkout button, test if the total is greater than the subtotal
         driver.findElement(By.linkText("VIEW BASKET")).click();
-        Assert.assertNotEquals("₹350.00", driver.findElements(By.linkText("₹367.50")));
+        assertNotEquals("₹350.00", driver.findElements(By.linkText("₹367.50")));
 
         //10. Click the PROCEED TO CHECKOUT button
         driver.findElement(By.linkText("PROCEED TO CHECKOUT")).click();
@@ -73,7 +77,7 @@ public class Selenium {
         driver.findElement(By.id("place_order")).click();
 
         //12. Check if the Payment method is set to Cash on Delivery in both fields
-        Assert.assertEquals("Cash on Delivery", driver.findElement(By.xpath("//*[@id=\"page-35\"]/div/div[1]/ul/li[4]/strong")).getText());
-        Assert.assertEquals("Cash on Delivery", driver.findElement(By.xpath("//*[@id=\"page-35\"]/div/div[1]/table/tfoot/tr[3]/td")).getText());
+        assertEquals("Cash on Delivery", driver.findElement(By.xpath("//*[@id=\"page-35\"]/div/div[1]/ul/li[4]/strong")).getText());
+        assertEquals("Cash on Delivery", driver.findElement(By.xpath("//*[@id=\"page-35\"]/div/div[1]/table/tfoot/tr[3]/td")).getText());
     }
 }
